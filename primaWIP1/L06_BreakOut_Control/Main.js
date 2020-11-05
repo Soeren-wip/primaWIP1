@@ -5,7 +5,7 @@ var L06_BreakOut_Control;
     window.addEventListener("load", hndLoad);
     // window.addEventListener("click", sceneLoad);
     let ball;
-    let ToTheWall;
+    //let ToTheWall;
     let walls;
     let paddle;
     let bricks;
