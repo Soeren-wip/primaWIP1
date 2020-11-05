@@ -12,6 +12,7 @@ var L06_BreakOut_Control;
             cmpQuad.pivot.scale(_size.toVector3(0));
             let cMaterial = new ƒ.ComponentMaterial(GameObject.mtrSolidWhite);
             this.addComponent(cMaterial);
+            //TestTest
         }
     }
     GameObject.meshQuad = new ƒ.MeshQuad();
