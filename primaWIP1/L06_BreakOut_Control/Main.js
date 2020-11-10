@@ -59,8 +59,13 @@ var L06_BreakOut_Control;
         hndCollision();
     }
     function hndCollision() {
-        for (let wall of walls.getChildren())
-            ball.checkCollision(wall);
+        for (let wall of walls.getChildren()) {
+            if (wall.name == "WallBottom")
+                console.log("Testsss");
+            //ball.checkCollision(<GameObject>wall);
+            else
+                ball.checkCollision(wall);
+        }
         for (let brick of bricks.getChildren()) {
             if (ball.checkCollision(brick))
                 bricks.removeChild(brick);

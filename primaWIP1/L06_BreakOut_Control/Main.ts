@@ -79,11 +79,13 @@ namespace L06_BreakOut_Control {
     paddle.move();
 
     hndCollision();
+     
   }
 
   function hndCollision(): void {
-    for (let wall of walls.getChildren())
-      ball.checkCollision(<GameObject>wall);
+    for (let wall of walls.getChildren()) {
+        ball.checkCollision(<GameObject>wall);
+    }
 
     for (let brick of bricks.getChildren() as GameObject[]) {
       if (ball.checkCollision(brick))
