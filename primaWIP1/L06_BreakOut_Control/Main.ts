@@ -1,7 +1,7 @@
 namespace L06_BreakOut_Control {
-  import ƒ = FudgeCore;
+ import ƒ = FudgeCore;
 
-  window.addEventListener("load", hndLoad);
+  window.addEventListener("load" , hndLoad);
   // window.addEventListener("click", sceneLoad);
   let ball: Moveable;
   let walls: ƒ.Node;
