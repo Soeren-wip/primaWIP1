@@ -1,7 +1,7 @@
-namespace L10_Doom_Mouse {
+namespace L10_Doom_Enemy {
   import ƒ = FudgeCore;
 
-  export class Enemy extends GameObject {
+  export class Wall extends GameObject {
     // private static readonly meshQuad: ƒ.MeshQuad = new ƒ.MeshQuad();
 
     public constructor(_size: ƒ.Vector2, _position: ƒ.Vector3, _rotation: ƒ.Vector3, _material: ƒ.Material) {

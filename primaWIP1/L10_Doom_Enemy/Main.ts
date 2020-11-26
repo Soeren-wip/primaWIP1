@@ -1,4 +1,4 @@
-namespace L10_Doom_Mouse {
+namespace L10_Doom_Enemy {
   import ƒ = FudgeCore;
   import ƒaid = FudgeAid;
 
@@ -12,12 +12,12 @@ namespace L10_Doom_Mouse {
   let avatar: ƒ.Node = new ƒ.Node("Avatar");
   let walls: ƒ.Node;
 
-  let ctrSpeed: ƒ.Control = new ƒ.Control("AvatarSpeed", 0.3, ƒ.CONTROL_TYPE.PROPORTIONAL);
-  ctrSpeed.setDelay(100);
-  let ctrStrafe: ƒ.Control = new ƒ.Control("AvatarSpeed", 0.1, ƒ.CONTROL_TYPE.PROPORTIONAL);
+  let enemys: ƒ.Node;
+
+  let ctrSpeed: ƒ.Control = new ƒ.Control("AvatarSpeed", 0.5, ƒ.CONTROL_TYPE.PROPORTIONAL);
   ctrSpeed.setDelay(100);
   let ctrRotation: ƒ.Control = new ƒ.Control("AvatarRotation", -0.1, ƒ.CONTROL_TYPE.PROPORTIONAL);
-  ctrRotation.setDelay(100);
+  ctrRotation.setDelay(50);
 
   function hndLoad(_event: Event): void {
     const canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -34,6 +34,9 @@ namespace L10_Doom_Mouse {
 
     walls = createWalls();
     root.appendChild(walls);
+
+    enemys = createEnemy();
+    root.addChild(enemys);
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.projectCentral(1, 45, ƒ.FIELD_OF_VIEW.DIAGONAL, 0.2, 10000);
@@ -62,13 +65,12 @@ namespace L10_Doom_Mouse {
       ƒ.Keyboard.mapToValue(-1, 0, [ƒ.KEYBOARD_CODE.S, ƒ.KEYBOARD_CODE.ARROW_DOWN])
       + ƒ.Keyboard.mapToValue(1, 0, [ƒ.KEYBOARD_CODE.W, ƒ.KEYBOARD_CODE.ARROW_UP])
     );
-    ctrStrafe.setInput(
-      ƒ.Keyboard.mapToValue(1, 0, [ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT])
-      + ƒ.Keyboard.mapToValue(-1, 0, [ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT])
-    );
+    // ctrRotation.setInput(
+    //   ƒ.Keyboard.mapToValue(1, 0, [ƒ.KEYBOARD_CODE.A, ƒ.KEYBOARD_CODE.ARROW_LEFT])
+    //   + ƒ.Keyboard.mapToValue(-1, 0, [ƒ.KEYBOARD_CODE.D, ƒ.KEYBOARD_CODE.ARROW_RIGHT])
+    // );
 
-    moveAvatar(ctrSpeed.getOutput(), ctrRotation.getOutput(), ctrStrafe.getOutput());
-    ctrRotation.setInput(0);
+    moveAvatar(ctrSpeed.getOutput(), ctrRotation.getOutput());
 
     viewport.draw();
   }
@@ -78,11 +80,10 @@ namespace L10_Doom_Mouse {
     ctrRotation.setInput(_event.movementX);
   }
 
-  function moveAvatar(_speed: number, _rotation: number, _strafe: number): void {
+  function moveAvatar(_translation: number, _rotation: number): void {
     avatar.mtxLocal.rotateY(_rotation);
     let posOld: ƒ.Vector3 = avatar.mtxLocal.translation;
-    avatar.mtxLocal.translateZ(_speed);
-    avatar.mtxLocal.translateX(_strafe);
+    avatar.mtxLocal.translateZ(_translation);
 
     let bouncedOff: Wall[] = bounceOffWalls(<Wall[]>walls.getChildren());
     if (bouncedOff.length < 2)
@@ -134,5 +135,15 @@ namespace L10_Doom_Mouse {
     }
 
     return walls;
+  }
+
+  function createEnemy(): ƒ.Node {
+    let enemys: ƒ.Node = new ƒ.Node("Enemys");
+    //let txtEnemyOne: ƒ.TextureImage = new ƒ.TextureImage("../DoomAssets/DEM1_5.png");
+    //let mtrEnemy: ƒ.Material = new ƒ.Material("Enemy", ƒ.ShaderTexture, new ƒ.CoatTextured(null, txtEnemyOne));
+
+    //enemys.addChild(new Enemy(ƒ.Vector2.ONE(2), new ƒ.Vector3(2, 2, 2), ƒ.Vector3.ZERO(), mtrEnemy));
+
+    return enemys;
   }
 }
