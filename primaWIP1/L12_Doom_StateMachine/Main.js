@@ -67,6 +67,7 @@ var L12_Doom_StateMachine;
         let posOld = L12_Doom_StateMachine.avatar.mtxLocal.translation;
         L12_Doom_StateMachine.avatar.mtxLocal.translateZ(_speed);
         L12_Doom_StateMachine.avatar.mtxLocal.translateX(_strafe);
+        L12_Doom_StateMachine.Hud.displayPosition(posOld);
         let bouncedOff = bounceOffWalls(walls.getChildren());
         if (bouncedOff.length < 2)
             return;

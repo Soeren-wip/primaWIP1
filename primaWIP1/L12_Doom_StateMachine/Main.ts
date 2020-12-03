@@ -92,6 +92,8 @@ namespace L12_Doom_StateMachine {
     avatar.mtxLocal.translateZ(_speed);
     avatar.mtxLocal.translateX(_strafe);
 
+    Hud.displayPosition(posOld);
+
     let bouncedOff: Wall[] = bounceOffWalls(<Wall[]>walls.getChildren());
     if (bouncedOff.length < 2)
       return;
@@ -102,6 +104,8 @@ namespace L12_Doom_StateMachine {
 
     console.log("Stuck!");
     avatar.mtxLocal.translation = posOld;
+
+
   }
 
   function bounceOffWalls(_walls: Wall[]): Wall[] {
