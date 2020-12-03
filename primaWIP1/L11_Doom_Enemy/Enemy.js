@@ -46,17 +46,43 @@ var L11_Doom_Enemy;
         update() {
             if (this.mtxLocal.translation.equals(this.posTarget, 0.1))
                 this.chooseTargetPosition();
-            this.move();
-        }
-        move() {
+            //this.move();
             this.mtxLocal.showTo(this.posTarget);
-            this.mtxLocal.translateZ(this.speed * ƒ.Loop.timeFrameGame / 1000);
             this.show.mtxLocal.showTo(ƒ.Vector3.TRANSFORMATION(L11_Doom_Enemy.avatar.mtxLocal.translation, this.mtxWorldInverse, true));
+            this.switchSprite();
         }
+        /*
+        private move(): void {
+          
+          this.mtxLocal.translateZ(this.speed * ƒ.Loop.timeFrameGame / 1000);
+          
+        }
+        */
         chooseTargetPosition() {
             let range = 5; //sizeWall * numWalls / 2 - 2;
             this.posTarget = new ƒ.Vector3(ƒ.Random.default.getRange(-range, range), 0, ƒ.Random.default.getRange(-range, range));
             console.log("New target", this.posTarget.toString());
+        }
+        switchSprite() {
+            let angle = 0;
+            angle = (this.show.mtxLocal.rotation.y - this.mtxLocal.rotation.y);
+            //console.log(angle);
+            if (-22 < angle && angle < 22)
+                this.sprite.setAnimation(Enemy.animations["Idle_000"]);
+            else if (angle < 67)
+                this.sprite.setAnimation(Enemy.animations["Idle_045"]);
+            else if (angle < 112)
+                this.sprite.setAnimation(Enemy.animations["Idle_090"]);
+            else if (angle < 157)
+                this.sprite.setAnimation(Enemy.animations["Idle_135"]);
+            else if (angle < 180 || angle < -157)
+                this.sprite.setAnimation(Enemy.animations["Idle_180"]);
+            else if (angle < -112)
+                this.sprite.setAnimation(Enemy.animations["Idle_225"]);
+            else if (angle < -67)
+                this.sprite.setAnimation(Enemy.animations["Idle_270"]);
+            else if (angle < -22)
+                this.sprite.setAnimation(Enemy.animations["Idle_315"]);
         }
     }
     L11_Doom_Enemy.Enemy = Enemy;
