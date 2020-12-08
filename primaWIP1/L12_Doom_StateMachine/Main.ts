@@ -21,9 +21,13 @@ namespace L12_Doom_StateMachine {
   let ctrRotation: ƒ.Control = new ƒ.Control("AvatarRotation", -0.1, ƒ.CONTROL_TYPE.PROPORTIONAL);
   ctrRotation.setDelay(100);
 
+  //let MouseClicked: boolean = false;
+  let count:number = 0;
+  let ammo:number = 30;
+
   async function hndLoad(_event: Event): Promise<void> {
     const canvas: HTMLCanvasElement = document.querySelector("canvas");
-
+    
     let meshQuad: ƒ.MeshQuad = new ƒ.MeshQuad("Quad");
 
     let txtFloor: ƒ.TextureImage = new ƒ.TextureImage("../DoomAssets/DEM1_5.png");
@@ -57,9 +61,12 @@ namespace L12_Doom_StateMachine {
 
     canvas.addEventListener("mousemove", hndMouse);
     canvas.addEventListener("click", canvas.requestPointerLock);
+    canvas.addEventListener("click", mouseclick);
 
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, hndLoop);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 120);
+
+    Hud.displayCrosshair(false);
   }
 
   function hndLoop(_event: Event): void {
@@ -79,6 +86,25 @@ namespace L12_Doom_StateMachine {
       enemy.update();
 
     viewport.draw();
+    
+    
+    if (count > 29){
+      Hud.displayCrosshair(false);
+      count = 0;
+    }
+    count++;
+      
+  }
+
+  function mouseclick(_event: MouseEvent):void{
+    Hud.displayCrosshair(true);
+    if(ammo > 0){
+      ammo--;
+    }else {
+      ammo = 30;
+    }
+    //console.log(ammo);
+    Hud.updateAmmoDisplay(ammo);
   }
 
   function hndMouse(_event: MouseEvent): void {

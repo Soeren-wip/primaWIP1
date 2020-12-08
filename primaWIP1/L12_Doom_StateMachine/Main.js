@@ -17,6 +17,9 @@ var L12_Doom_StateMachine;
     ctrSpeed.setDelay(100);
     let ctrRotation = new ƒ.Control("AvatarRotation", -0.1, 0 /* PROPORTIONAL */);
     ctrRotation.setDelay(100);
+    //let MouseClicked: boolean = false;
+    let count = 0;
+    let ammo = 30;
     async function hndLoad(_event) {
         const canvas = document.querySelector("canvas");
         let meshQuad = new ƒ.MeshQuad("Quad");
@@ -44,8 +47,10 @@ var L12_Doom_StateMachine;
         L12_Doom_StateMachine.viewport.draw();
         canvas.addEventListener("mousemove", hndMouse);
         canvas.addEventListener("click", canvas.requestPointerLock);
+        canvas.addEventListener("click", mouseclick);
         ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, hndLoop);
         ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 120);
+        L12_Doom_StateMachine.Hud.displayCrosshair(false);
     }
     function hndLoop(_event) {
         ctrSpeed.setInput(ƒ.Keyboard.mapToValue(-1, 0, [ƒ.KEYBOARD_CODE.S, ƒ.KEYBOARD_CODE.ARROW_DOWN])
@@ -57,6 +62,22 @@ var L12_Doom_StateMachine;
         for (let enemy of enemies.getChildren())
             enemy.update();
         L12_Doom_StateMachine.viewport.draw();
+        if (count > 29) {
+            L12_Doom_StateMachine.Hud.displayCrosshair(false);
+            count = 0;
+        }
+        count++;
+    }
+    function mouseclick(_event) {
+        L12_Doom_StateMachine.Hud.displayCrosshair(true);
+        if (ammo > 0) {
+            ammo--;
+        }
+        else {
+            ammo = 30;
+        }
+        //console.log(ammo);
+        L12_Doom_StateMachine.Hud.updateAmmoDisplay(ammo);
     }
     function hndMouse(_event) {
         // console.log(_event.movementX, _event.movementY);
